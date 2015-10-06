@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "Starting phase 2 of install"
+
 HOME_DIR=$1
 
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
@@ -15,8 +17,8 @@ export DEBIAN_FRONTEND=noninteractive
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-locale-gen en_US.UTF-8
-dpkg-reconfigure locales
+locale-gen en_US.UTF-8  >/dev/null
+dpkg-reconfigure locales >/dev/null
 
 
 # Set some params so it's non-interactive for the lamp-server install

@@ -16,7 +16,7 @@ cd "$HOME_DIR"
 
 # Download and install Karaf
 cp -v "$DOWNLOAD_DIR/apache-karaf-$KARAF_VERSION.tar.gz" "$HOME_DIR"
-tar zxvf apache-karaf-"$KARAF_VERSION".tar.gz
+tar zxf apache-karaf-"$KARAF_VERSION".tar.gz
 rm apache-karaf-"$KARAF_VERSION".tar.gz
 mv apache-karaf-"$KARAF_VERSION" /opt
 ln -s /opt/apache-karaf-"$KARAF_VERSION" /opt/karaf
@@ -24,7 +24,7 @@ ln -s /opt/apache-karaf-"$KARAF_VERSION" /opt/karaf
 # Run a setup script to add some feature repos and prepare it for running as a service
 /opt/karaf/bin/start
 sleep 60
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/setup.script"
+"$KARAF_CLIENT" -b < "$KARAF_CONFIGS/setup.script"
 /opt/karaf/bin/stop
 
 # Add it as a Linux service
@@ -32,7 +32,7 @@ ln -s /opt/karaf/bin/karaf-service /etc/init.d/
 update-rc.d karaf-service defaults
 
 # Maven
-apt-get -y install maven
+apt-get -y -qq install maven | grep 'Setting up' | cat
 
 # Add the vagrant user's maven repository
 sed -i "s|#org.ops4j.pax.url.mvn.localRepository=|org.ops4j.pax.url.mvn.localRepository=$HOME_DIR/.m2/repository|" /opt/karaf/etc/org.ops4j.pax.url.mvn.cfg

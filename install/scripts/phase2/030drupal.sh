@@ -11,8 +11,8 @@ fi
 cd "$HOME_DIR"
 
 # Drush and drupal deps
-apt-get -y install php5-gd
-apt-get -y install drush
+apt-get -y -q install php5-gd
+apt-get -y -q install drush
 a2enmod rewrite
 service apache2 reload
 cd /var/www/html
@@ -118,7 +118,7 @@ if [ ! -f "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" ]; then
 fi
 cp -v "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
 cd /tmp
-tar -xzvf coder-8.x-2.1.tar.gz
+tar -xzf coder-8.x-2.1.tar.gz
 mv -v /tmp/coder /usr/share
 chown -hR ${FRONTEND_USER}:${FRONTEND_USER} /usr/share/coder
 ln -sv /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards

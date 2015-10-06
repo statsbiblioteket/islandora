@@ -25,11 +25,13 @@ eval $TOMCAT_CONTROLLER restart
 # Cycle karaf and watch the maven bundles
 service karaf-service restart
 sleep 60
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/watch.script"
+"$KARAF_CLIENT" -b < "$KARAF_CONFIGS/watch.script"
 
 # Fix ApacheSolr config
-drush -r "$DRUPAL_HOME" sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
-drush -r "$DRUPAL_HOME" cc all
+drush -q -r "$DRUPAL_HOME" sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
+drush -q -r "$DRUPAL_HOME" cc all
 
 # Add DC as some default fields for folks.
-drush -r "$DRUPAL_HOME" scr "$HOME_DIR"/islandora/install/configs/add_default_fields.php
+drush -q -r "$DRUPAL_HOME" scr "$HOME_DIR"/islandora/install/configs/add_default_fields.php
+
+echo "Phase 2 of install is now complete"

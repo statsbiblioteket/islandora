@@ -12,11 +12,11 @@ chown -R ${FRONTEND_USER}:${FRONTEND_USER} "$HOME_DIR/.m2"
 cd "$HOME_DIR"/islandora/camel/services
 
 cd collection-service
-sudo -u ${FRONTEND_USER} mvn install
+sudo -u ${FRONTEND_USER} mvn -q install
 
 cd "$HOME_DIR"/islandora/camel/services
 
 cd basic-image-service
-sudo -u ${FRONTEND_USER} mvn install
+sudo -u ${FRONTEND_USER} mvn -q install
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/services.script"
+"$KARAF_CLIENT" -b < "$KARAF_CONFIGS/services.script"
