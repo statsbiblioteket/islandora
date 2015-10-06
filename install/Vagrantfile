@@ -27,25 +27,32 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
 
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", '2048']
+    vb.memory = 2048
+    vb.cpus = 2
   end
 
   config.vm.provision :shell, inline: "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile", :privileged =>false
-  config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/blazegraph.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/fcrepo-camel-toolbox.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-commands.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/hawtio.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/camel.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/fcrepo-camel.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/activemq.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/config.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-component.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/sync.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/services.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/post-install.sh", :args => home_dir
+  config.vm.provision :shell, :path => './scripts/phase1/010bootstrap.sh', :args => home_dir
+  config.vm.provision :shell, :path => './scripts/phase1/011java.sh', :args => home_dir
+  config.vm.provision :shell, :path => './scripts/phase1/012tomcat.sh', :args => home_dir
+  config.vm.provision :shell, :path => './scripts/phase1/013zsh.sh', :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase1/015IngestDir.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase1/020solr.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase1/040fcrepo.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase1/050blazegraph.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase1/060fcrepo-camel-toolbox.sh", :args => home_dir
+
+  config.vm.provision :shell, :path => "./scripts/phase2/014lamp-server.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/030drupal.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/070islandora-commands.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/080karaf.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/090karaf-hawtio.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/100karaf-camel.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/110karaf-fcrepo-camel.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/120karaf-activemq.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/130karaf-config.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/140karaf-islandora-component.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/150sync.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/160services.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/phase2/170post-install.sh", :args => home_dir
 end

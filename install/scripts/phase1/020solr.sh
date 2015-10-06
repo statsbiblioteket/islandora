@@ -5,7 +5,7 @@ echo "Installing Solr"
 HOME_DIR=$1
 
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
-  . "$HOME_DIR"/islandora/install/configs/variables
+  . $PWD/islandora/install/configs/variables
 fi
 
 if [ ! -f "$DOWNLOAD_DIR/solr-$SOLR_VERSION.tgz" ]; then
@@ -21,24 +21,24 @@ fi
 cp -v "$DOWNLOAD_DIR/solr-$SOLR_VERSION.tgz" /tmp
 cd /tmp
 tar -xzvf solr-"$SOLR_VERSION".tgz
-cp -v "solr-$SOLR_VERSION/dist/solr-$SOLR_VERSION.war" /var/lib/tomcat7/webapps/solr.war
-chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/solr.war
+cp -v "solr-$SOLR_VERSION/dist/solr-$SOLR_VERSION.war" ${WEBAPPS_DIR}/solr.war
+chown ${TOMCAT_USER} ${WEBAPPS_DIR}/solr.war
 
 if [ ! -f "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" ]; then
   echo "Downloading commons-logging-1.1.2.jar"
   wget -q -O "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" "http://repo1.maven.org/maven2/commons-logging/commons-logging/1.1.2/commons-logging-1.1.2.jar"
 fi
-cp -v "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" cd /usr/share/tomcat7/lib
-cp /tmp/solr-"$SOLR_VERSION"/example/lib/ext/slf4j* /usr/share/tomcat7/lib
-cp /tmp/solr-"$SOLR_VERSION"/example/lib/ext/log4j* /usr/share/tomcat7/lib
+cp -v "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" ${TOMCAT_LIBS}
+cp /tmp/solr-${SOLR_VERSION}/example/lib/ext/slf4j* ${TOMCAT_LIBS}
+cp /tmp/solr-${SOLR_VERSION}/example/lib/ext/log4j* ${TOMCAT_LIBS}
 
-chown -hR tomcat7:tomcat7 /usr/share/tomcat7/lib
+chown -hR ${TOMCAT_USER} $TOMCAT_LIBS
 
 cp -Rv /tmp/solr-"$SOLR_VERSION"/example/solr/* "$SOLR_HOME"
 
-chown -hR tomcat7:tomcat7 "$SOLR_HOME"
+chown -hR ${TOMCAT_USER} "$SOLR_HOME"
 
-touch /var/lib/tomcat7/velocity.log
-chown tomcat7:tomcat7 /var/lib/tomcat7/velocity.log
+touch ${TOMCAT_LOGS}/velocity.log
+chown ${TOMCAT_USER} ${TOMCAT_LOGS}/velocity.log
 
-service tomcat7 restart
+eval $TOMCAT_CONTROLLER restart

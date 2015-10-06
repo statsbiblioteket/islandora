@@ -7,20 +7,20 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
 fi
 
 # Chown and chmod tomcat directory
-chown -R tomcat7:tomcat7 /var/lib/tomcat7
-chown -R tomcat7:tomcat7 /var/log/tomcat7
-chmod -R g+w /var/lib/tomcat7
+chown -R ${TOMCAT_USER} $TOMCAT_HOME
+chown -R ${TOMCAT_USER} $TOMCAT_LOGS
+chmod -R g+w $TOMCAT_HOME
 
 # Chown and chmod apache directory
 chown -R www-data:www-data /var/www/html
 chmod -R g+w /var/www/html
 
 # Chown the home directory for good measure
-chown -R vagrant:vagrant "$HOME_DIR"
+chown -R ${FRONTEND_USER}:${FRONTEND_USER} "$HOME_DIR"
 
 # Cycle tomcat
-cd /var/lib/tomcat7
-service tomcat7 restart
+cd $TOMCAT_HOME
+eval $TOMCAT_CONTROLLER restart
 
 # Cycle karaf and watch the maven bundles
 service karaf-service restart

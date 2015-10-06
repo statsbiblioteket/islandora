@@ -81,15 +81,16 @@ mkdir ARC2
 cd ARC2
 git clone https://github.com/semsol/arc2.git
 mv arc2 arc
+
 cd "$DRUPAL_HOME/sites/all/modules"
 
 # Apache Solr
 drush dl apachesolr
 drush en -y apachesolr
-
 # Copy new schema files and restart Tomcat
-cp -f "$DRUPAL_HOME/apachesolr/solr-conf/solr-4.x/*" "$SOLR_HOME/collection1/conf/"
-service tomcat7 restart
+cp -f apachesolr/solr-conf/solr-4.x/* "$SOLR_HOME/collection1/conf/"
+eval $TOMCAT_CONTROLLER restart
+
 
 # Islandora modules
 ln -s "$HOME_DIR"/islandora/drupal islandora
@@ -119,5 +120,5 @@ cp -v "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
 cd /tmp
 tar -xzvf coder-8.x-2.1.tar.gz
 mv -v /tmp/coder /usr/share
-chown -hR vagrant:vagrant /usr/share/coder
+chown -hR ${FRONTEND_USER}:${FRONTEND_USER} /usr/share/coder
 ln -sv /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards
