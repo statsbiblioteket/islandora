@@ -1,11 +1,11 @@
 #!/bin/bash
-echo "Installing Fedora."
+
+echo "running 040fcrepo.sh"
 
 HOME_DIR=$1
 
-if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
-  . "$HOME_DIR"/islandora/install/configs/variables
-fi
+. "$HOME_DIR"/islandora/install/configs/variables
+
 
 if [ ! -f "$DOWNLOAD_DIR/fcrepo.war" ]; then
   echo "Downloading Fedora 4"

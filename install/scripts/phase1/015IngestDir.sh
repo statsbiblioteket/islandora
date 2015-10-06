@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+echo "running 015IngestDir.sh"
+
 HOME_DIR=$1
 
-if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
-  . "$HOME_DIR"/islandora/install/configs/variables
-fi
+. "$HOME_DIR"/islandora/install/configs/variables
 
 cd "$HOME_DIR"
 

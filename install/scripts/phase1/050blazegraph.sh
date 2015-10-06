@@ -1,11 +1,11 @@
 #!/bin/bash
-echo "Installing BlazeGraph's NanoSparqlServer"
+
+echo "running 050blazegraph.sh"
 
 HOME_DIR=$1
 
-if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
-  . "$HOME_DIR"/islandora/install/configs/variables
-fi
+. "$HOME_DIR"/islandora/install/configs/variables
+
 
 if [ ! -f "$DOWNLOAD_DIR/bigdata.war" ]; then
   echo "Downloading Blazegraph"

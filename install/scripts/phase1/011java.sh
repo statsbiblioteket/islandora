@@ -4,23 +4,20 @@
 ## http://askubuntu.com/questions/464755/how-to-install-openjdk-8-on-14-04-lts
 ## We'll use Oracle Java8 for now.
 
+echo "running 011java.sh"
+
 HOME_DIR=$1
-
-if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
-  . "$HOME_DIR"/islandora/install/configs/variables
-fi
-
+source "$HOME_DIR"/islandora/install/configs/variables
 cd "$HOME_DIR"
 
 
 # Java (Oracle)
-sudo apt-get install -y software-properties-common
-sudo apt-get install -y python-software-properties
-sudo add-apt-repository -y ppa:webupd8team/java
-sudo apt-get update
-echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
-sudo apt-get install -y oracle-java8-installer
-sudo update-java-alternatives -s java-8-oracle
-sudo apt-get install -y oracle-java8-set-default
+apt-get -qq -y install  software-properties-common python-software-properties | grep 'Setting up' | cat
+add-apt-repository -y ppa:webupd8team/java
+apt-get -qq update
+debconf-set-selections <<< "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true"
+debconf-set-selections <<< "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true"
+apt-get -qq -y install oracle-java8-installer 2> /dev/null | grep 'Setting up' | cat
+update-java-alternatives -s java-8-oracle
+apt-get -qq -y install oracle-java8-set-default | grep 'Setting up' | cat
 export JAVA_HOME=${JAVA8_HOME}

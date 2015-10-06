@@ -1,11 +1,10 @@
 #!/bin/bash
-echo "Installing Fcrepo-Camel-Toolbox"
+
+echo "running 060fcrepo-camel-toolbox.sh"
 
 HOME_DIR=$1
 
-if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
-  . "$HOME_DIR"/islandora/install/configs/variables
-fi
+. "$HOME_DIR"/islandora/install/configs/variables
 
 if [ ! -f "$DOWNLOAD_DIR/fcrepo-camel-toolbox.war" ]; then
   echo "Downloading fcrepo-camel-toolbox"
@@ -22,3 +21,4 @@ fi
 
 eval $TOMCAT_CONTROLLER restart
 
+echo "Phase 1 of install is now complete"

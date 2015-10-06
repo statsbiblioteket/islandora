@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
+echo "running 013zsh.sh"
+
 HOME_DIR=$1
 
-if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
-  . "$HOME_DIR"/islandora/install/configs/variables
-fi
+. "$HOME_DIR"/islandora/install/configs/variables
+
 
 cd "$HOME_DIR"
 
@@ -15,4 +16,4 @@ MAN_FILES=$(wget -qO- "http://sourceforge.net/projects/zsh/files/zsh/5.0.2/zsh-5
 for MAN_FILE in ${MAN_FILES}; do gzip -f /usr/share/man/man1/"${MAN_FILE##*/}"; done
 
 # More helpful packages
-apt-get -y install zsh
+apt-get -y -qq install zsh | grep 'Setting up' | cat

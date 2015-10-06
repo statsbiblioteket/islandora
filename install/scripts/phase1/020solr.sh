@@ -1,12 +1,10 @@
 #!/bin/bash
 
-echo "Installing Solr"
+echo "running 020Solr.sh"
 
 HOME_DIR=$1
 
-if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
-  . $PWD/islandora/install/configs/variables
-fi
+. $HOME_DIR/islandora/install/configs/variables
 
 if [ ! -f "$DOWNLOAD_DIR/solr-$SOLR_VERSION.tgz" ]; then
   echo "Downloading Solr"
@@ -20,7 +18,7 @@ fi
 
 cp -v "$DOWNLOAD_DIR/solr-$SOLR_VERSION.tgz" /tmp
 cd /tmp
-tar -xzvf solr-"$SOLR_VERSION".tgz
+tar -xzf solr-"$SOLR_VERSION".tgz
 cp -v "solr-$SOLR_VERSION/dist/solr-$SOLR_VERSION.war" ${WEBAPPS_DIR}/solr.war
 chown ${TOMCAT_USER} ${WEBAPPS_DIR}/solr.war
 
@@ -34,7 +32,7 @@ cp /tmp/solr-${SOLR_VERSION}/example/lib/ext/log4j* ${TOMCAT_LIBS}
 
 chown -hR ${TOMCAT_USER} $TOMCAT_LIBS
 
-cp -Rv /tmp/solr-"$SOLR_VERSION"/example/solr/* "$SOLR_HOME"
+cp -R /tmp/solr-"$SOLR_VERSION"/example/solr/* "$SOLR_HOME"
 
 chown -hR ${TOMCAT_USER} "$SOLR_HOME"
 
