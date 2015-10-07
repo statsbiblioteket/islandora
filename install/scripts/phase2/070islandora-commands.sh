@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Installing Commands"
+echo "Installing Islandora Commands"
 
 HOME_DIR=$1
 

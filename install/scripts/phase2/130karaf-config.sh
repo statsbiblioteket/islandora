@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Deploying Karaf Configuration"
+echo "Deploying Islandora config to Karaf"
 
 HOME_DIR=$1
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then

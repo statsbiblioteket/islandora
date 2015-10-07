@@ -1,9 +1,9 @@
 #!/bin/bash
-echo "Installing ActiveMQ"
+echo "Installing ActiveMQ in Karaf"
 
 HOME_DIR=$1
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-"$KARAF_CLIENT" -b < "$KARAF_CONFIGS/activemq.script"
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/activemq.script"

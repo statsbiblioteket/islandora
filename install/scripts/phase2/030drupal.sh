@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Installing Drupal."
-
 HOME_DIR=$1
 
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
@@ -11,14 +9,16 @@ fi
 cd "$HOME_DIR"
 
 # Drush and drupal deps
-apt-get -y -q install php5-gd
-apt-get -y -q install drush
+echo "Installing Drush"
+apt-get -y -qq install php5-gd
+apt-get -y -qq install drush
 a2enmod rewrite
 service apache2 reload
 cd /var/www/html
 
 # Download Drupal
-drush dl drupal --drupal-project-rename=drupal
+echo "Installing Drupal"
+drush dl -y -q drupal --drupal-project-rename=drupal
 
 # Permissions
 chown -R www-data:www-data drupal
@@ -46,6 +46,7 @@ rm /var/www/html/index.html
 # Cycle apache
 service apache2 restart
 
+echo "Installing Islandora dependencies"
 # Make the modules and libraries directories
 if [ ! -d "$DRUPAL_HOME/sites/all/modules" ]; then
   mkdir "$DRUPAL_HOME/sites/all/modules"
@@ -56,8 +57,6 @@ if [ ! -d "$DRUPAL_HOME/sites/all/libraries" ]; then
 fi
 
 cd "$DRUPAL_HOME/sites/all/modules"
-
-# Islandora dependencies
 drush dl httprl
 drush dl services
 drush dl field_permissions
@@ -87,13 +86,13 @@ cd "$DRUPAL_HOME/sites/all/modules"
 # Apache Solr
 drush dl apachesolr
 drush en -y apachesolr
-# Copy new schema files and restart Tomcat
+echo "Copy new schema files to Solr and restart Tomcat"
 cp -f apachesolr/solr-conf/solr-4.x/* "$SOLR_HOME/collection1/conf/"
 eval $TOMCAT_CONTROLLER restart
 
-
+echo "Installing Islandora Modules"
 # Islandora modules
-ln -s "$HOME_DIR"/islandora/drupal islandora
+ln -s "$HOME_DIR"/islandora/drupal "$DRUPAL_HOME/sites/all/modules/islandora"
 drush -y en islandora
 drush -y en islandora_dc
 drush -y en islandora_mods
@@ -104,21 +103,22 @@ drush -y en islandora_delete_by_fedora_uri_service
 drush -y en islandora_medium_size_service
 drush -y en islandora_tn_service
 
+echo "Installing Drupal Themes"
 # Set default theme to bootstrap
 cd "$DRUPAL_HOME/sites/all/themes"
 drush -y dl bootstrap
 drush -y en bootstrap
 drush vset theme_default bootstrap
 
-# Coder & Code Sniffer
+echo "Install Coder & Code Sniffer"
 pear install PHP_CodeSniffer
 if [ ! -f "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" ]; then
   echo "Downloading coder"
   wget -q -O "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" http://ftp.drupal.org/files/projects/coder-8.x-2.1.tar.gz
 fi
-cp -v "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
+cp  "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
 cd /tmp
 tar -xzf coder-8.x-2.1.tar.gz
-mv -v /tmp/coder /usr/share
+mv  /tmp/coder /usr/share
 chown -hR ${FRONTEND_USER}:${FRONTEND_USER} /usr/share/coder
-ln -sv /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards
+ln -s /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Starting phase 2 of install"
-
 HOME_DIR=$1
 
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
@@ -28,6 +26,7 @@ debconf-set-selections <<< "postfix postfix/mailname string islandora-fedora4.or
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
 
 # Lamp server
+echo "Installing LAMP server (Linux Apache MySQL PHP)"
 tasksel install lamp-server
 usermod -a -G www-data ${FRONTEND_USER}
 

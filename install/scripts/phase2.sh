@@ -6,6 +6,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 HOME_DIR=$1
 
+echo "Starting phase 2 of install"
+
 /vagrant/scripts/phase2/014lamp-server.sh $HOME_DIR
 /vagrant/scripts/phase2/030drupal.sh $HOME_DIR
 /vagrant/scripts/phase2/070islandora-commands.sh $HOME_DIR
@@ -20,3 +22,4 @@ HOME_DIR=$1
 /vagrant/scripts/phase2/160services.sh $HOME_DIR
 /vagrant/scripts/phase2/170post-install.sh $HOME_DIR
 
+echo "Phase 2 of install is now complete"

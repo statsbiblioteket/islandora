@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Installing Islandora Services"
+echo "Installing Islandora Services in Karaf"
 
 HOME_DIR=$1
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
@@ -19,4 +19,4 @@ cd "$HOME_DIR"/islandora/camel/services
 cd basic-image-service
 sudo -u ${FRONTEND_USER} mvn -q install
 
-"$KARAF_CLIENT" -b < "$KARAF_CONFIGS/services.script"
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/services.script"
