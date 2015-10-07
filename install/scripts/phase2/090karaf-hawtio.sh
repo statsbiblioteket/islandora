@@ -7,4 +7,4 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/hawtio.script"
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/hawtio.script" > /dev/null

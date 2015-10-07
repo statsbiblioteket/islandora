@@ -12,4 +12,4 @@ chown -R ${FRONTEND_USER}:${FRONTEND_USER} "$HOME_DIR/.m2"
 cd "$HOME_DIR/islandora/camel/sync"
 
 sudo -u ${FRONTEND_USER} mvn -q install
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/sync.script"
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/sync.script" > /dev/null

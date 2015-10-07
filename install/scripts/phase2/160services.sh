@@ -19,4 +19,4 @@ cd "$HOME_DIR"/islandora/camel/services
 cd basic-image-service
 sudo -u ${FRONTEND_USER} mvn -q install
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/services.script"
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/services.script" > /dev/null

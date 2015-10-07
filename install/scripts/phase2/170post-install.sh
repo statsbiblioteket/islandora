@@ -25,7 +25,7 @@ eval $TOMCAT_CONTROLLER restart
 echo "Cycle karaf and watch the maven bundles"
 service karaf-service restart
 sleep 60
-"$KARAF_CLIENT" -b < "$KARAF_CONFIGS/watch.script"
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/watch.script" > /dev/null
 
 echo "Fix ApacheSolr config"
 drush -q -r "$DRUPAL_HOME" sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
