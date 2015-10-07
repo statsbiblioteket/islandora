@@ -13,13 +13,15 @@ fi
 
 cd "$HOME_DIR"
 
-sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse' /etc/apt/sources.list
-sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse' /etc/apt/sources.list
-sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse' /etc/apt/sources.list
-sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse' /etc/apt/sources.list
+echo "Setting up ubuntu mirrors"
+if [ ! $(grep "mirror://mirrors.ubuntu.com/mirrors.txt" /etc/apt/sources.list) ]; then
+  sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse' /etc/apt/sources.list
+  sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse' /etc/apt/sources.list
+  sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse' /etc/apt/sources.list
+  sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse' /etc/apt/sources.list
+fi
 
-
-#Make perl shut up about locales
+echo "Make perl shut up about locales"
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -29,6 +31,7 @@ dpkg-reconfigure locales >/dev/null
 
 
 # Update
+echo "Installing general tools"
 apt-get -qq -y update #&& apt-get -y upgrade
 
 # Build tools

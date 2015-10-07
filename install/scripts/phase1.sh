@@ -3,6 +3,8 @@
 set -e
 export DEBIAN_FRONTEND=noninteractive
 HOME_DIR=$1
+echo "Starting phase 1 of install"
+
 
 /vagrant/scripts/phase1/010bootstrap.sh $HOME_DIR
 /vagrant/scripts/phase1/011java.sh $HOME_DIR
@@ -13,3 +15,5 @@ HOME_DIR=$1
 /vagrant/scripts/phase1/040fcrepo.sh $HOME_DIR
 /vagrant/scripts/phase1/050blazegraph.sh $HOME_DIR
 /vagrant/scripts/phase1/060fcrepo-camel-toolbox.sh $HOME_DIR
+
+echo "Phase 1 of install is now complete"

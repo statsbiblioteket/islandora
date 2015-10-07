@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "running 013zsh.sh"
+echo "Installing ZSH"
 
 HOME_DIR=$1
 

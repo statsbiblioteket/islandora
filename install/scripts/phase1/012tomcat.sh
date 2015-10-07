@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "running 012tomcat.sh"
+echo "Installing tomcat"
 
 HOME_DIR=$1
 
@@ -13,6 +13,9 @@ export JAVA_HOME=${JAVA8_HOME}
 
 # Tomcat
 apt-get -qq -y install ${TOMCAT_VERSION} ${TOMCAT_VERSION}-admin | grep 'Setting up' | cat
+
+
+echo "Setting up tomcat"
 usermod -a -G ${TOMCAT_VERSION} ${FRONTEND_USER}
 sed -i '$i<user username="islandora" password="islandora" roles="manager-gui"/>' ${TOMCAT_CONF}/tomcat-users.xml
 
