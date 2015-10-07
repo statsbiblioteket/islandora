@@ -10,8 +10,8 @@ cd "$HOME_DIR"
 
 # Drush and drupal deps
 echo "Installing Drush"
-apt-get -y -qq install php5-gd
-apt-get -y -qq install drush
+apt-get -y -qq install php5-gd | grep 'Setting up' | cat
+apt-get -y -qq install drush | grep 'Setting up' | cat
 a2enmod rewrite
 service apache2 reload
 cd /var/www/html
@@ -49,11 +49,11 @@ service apache2 restart
 echo "Installing Islandora dependencies"
 # Make the modules and libraries directories
 if [ ! -d "$DRUPAL_HOME/sites/all/modules" ]; then
-  mkdir "$DRUPAL_HOME/sites/all/modules"
+  mkdir -p "$DRUPAL_HOME/sites/all/modules"
 fi
 
 if [ ! -d "$DRUPAL_HOME/sites/all/libraries" ]; then
-  mkdir "$DRUPAL_HOME/sites/all/libraries"
+  mkdir -p "$DRUPAL_HOME/sites/all/libraries"
 fi
 
 cd "$DRUPAL_HOME/sites/all/modules"

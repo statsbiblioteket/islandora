@@ -22,7 +22,7 @@ fi
 chown ${TOMCAT_USER} ${FEDORA_DATA}
 chmod g-w ${FEDORA_DATA}
 
-cp -v "$DOWNLOAD_DIR/fcrepo.war" ${WEBAPPS_DIR}
+cp "$DOWNLOAD_DIR/fcrepo.war" ${WEBAPPS_DIR}
 chown ${TOMCAT_USER} ${WEBAPPS_DIR}/fcrepo.war
 sed -i 's#JAVA_OPTS="-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC"#JAVA_OPTS="-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m"#g' $TOMCAT_ENV
 
