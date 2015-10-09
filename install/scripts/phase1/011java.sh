@@ -11,6 +11,11 @@ source "$HOME_DIR"/islandora/install/configs/variables
 cd "$HOME_DIR"
 
 
+set -e
+if [ -f ~/java ]; then
+    exit
+fi
+
 # Java (Oracle)
 echo "adding repositories for java packages"
 apt-get -qq -y install  software-properties-common python-software-properties | grep 'Setting up' | cat
@@ -24,3 +29,5 @@ apt-get -qq -y install oracle-java8-installer 2> /dev/null | grep 'Setting up' |
 update-java-alternatives -s java-8-oracle
 apt-get -qq -y install oracle-java8-set-default | grep 'Setting up' | cat
 export JAVA_HOME=${JAVA8_HOME}
+
+touch ~/java

@@ -6,6 +6,12 @@ HOME_DIR=$1
 
 . $HOME_DIR/islandora/install/configs/variables
 
+
+set -e
+if [ -f ~/solr ]; then
+    exit
+fi
+
 if [ ! -f "$DOWNLOAD_DIR/solr-$SOLR_VERSION.tgz" ]; then
   echo "Downloading Solr"
   wget -q -O "$DOWNLOAD_DIR/solr-$SOLR_VERSION.tgz" "http://archive.apache.org/dist/lucene/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz"
@@ -42,3 +48,5 @@ chown ${TOMCAT_USER} ${TOMCAT_LOGS}/velocity.log
 
 echo "Restarting Tomcat with Solr"
 eval $TOMCAT_CONTROLLER restart
+
+touch ~/solr

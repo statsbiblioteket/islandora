@@ -6,6 +6,12 @@ HOME_DIR=$1
 
 . "$HOME_DIR"/islandora/install/configs/variables
 
+
+set -e
+if [ -f ~/fcrepo-camel-toolbox ]; then
+    exit
+fi
+
 if [ ! -f "$DOWNLOAD_DIR/fcrepo-camel-toolbox.war" ]; then
   echo "Downloading fcrepo-camel-toolbox"
   wget -q -O "$DOWNLOAD_DIR/fcrepo-camel-toolbox.war" "https://github.com/fcrepo4-labs/fcrepo-camel-toolbox/releases/download/fcrepo-camel-toolbox-$CAMEL_VERSION/fcrepo-camel-webapp-at-is-it-$CAMEL_VERSION.war"
@@ -21,3 +27,4 @@ fi
 
 eval $TOMCAT_CONTROLLER restart
 
+touch ~/fcrepo-camel-toolbox

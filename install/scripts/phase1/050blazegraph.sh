@@ -7,6 +7,11 @@ HOME_DIR=$1
 . "$HOME_DIR"/islandora/install/configs/variables
 
 
+set -e
+if [ -f ~/blazegraph ]; then
+    exit
+fi
+
 if [ ! -f "$DOWNLOAD_DIR/bigdata.war" ]; then
   echo "Downloading Blazegraph"
   wget -q -O "$DOWNLOAD_DIR/bigdata.war" "http://sourceforge.net/projects/bigdata/files/bigdata/$BLAZEGRAPH_VERSION/bigdata.war/download"
@@ -22,3 +27,4 @@ fi
 
 eval $TOMCAT_CONTROLLER restart
 
+touch ~/blazegraph

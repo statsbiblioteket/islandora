@@ -7,6 +7,11 @@ HOME_DIR=$1
 . "$HOME_DIR"/islandora/install/configs/variables
 
 
+set -e
+if [ -f ~/zsh ]; then
+    exit
+fi
+
 cd "$HOME_DIR"
 
 # Bug fix for Ubuntu 14.04 with zsh 5.0.2 -- https://bugs.launchpad.net/ubuntu/+source/zsh/+bug/1242108
@@ -17,3 +22,5 @@ for MAN_FILE in ${MAN_FILES}; do gzip -f /usr/share/man/man1/"${MAN_FILE##*/}"; 
 
 # More helpful packages
 apt-get -y -qq install zsh | grep 'Setting up' | cat
+
+touch ~/zsh

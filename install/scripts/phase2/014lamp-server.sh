@@ -8,6 +8,12 @@ fi
 
 cd "$HOME_DIR"
 
+
+set -e
+if [ -f ~/lamp ]; then
+    exit
+fi
+
 # Set apt-get for non-interactive mode
 export DEBIAN_FRONTEND=noninteractive
 
@@ -33,3 +39,4 @@ usermod -a -G www-data ${FRONTEND_USER}
 # Get the repo
 chown -R ${FRONTEND_USER}:${FRONTEND_USER} $HOME_DIR/islandora
 
+touch ~/lamp

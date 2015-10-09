@@ -8,6 +8,12 @@ fi
 
 cd "$HOME_DIR"
 
+
+set -e
+if [ -f ~/drupal ]; then
+    exit
+fi
+
 # Drush and drupal deps
 echo "Installing Drush"
 apt-get -y -qq install php5-gd | grep 'Setting up' | cat
@@ -41,7 +47,7 @@ sed -i '$i\\tRequire all granted' /etc/apache2/apache2.conf
 sed -i '$i</Directory>' /etc/apache2/apache2.conf
 
 # Torch the default index.html
-rm /var/www/html/index.html
+rm -f /var/www/html/index.html
 
 # Cycle apache
 service apache2 restart
@@ -111,8 +117,9 @@ drush -y en bootstrap
 drush vset theme_default bootstrap
 
 echo "Install Coder & Code Sniffer"
-pear install PHP_CodeSniffer
+
 if [ ! -f "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" ]; then
+  pear install PHP_CodeSniffer
   echo "Downloading coder"
   wget -q -O "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" http://ftp.drupal.org/files/projects/coder-8.x-2.1.tar.gz
   cp  "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
@@ -122,3 +129,5 @@ if [ ! -f "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" ]; then
   chown -hR ${FRONTEND_USER}:${FRONTEND_USER} /usr/share/coder
   ln -s /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards
 fi
+
+touch ~/drupal

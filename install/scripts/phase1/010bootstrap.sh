@@ -7,14 +7,21 @@ HOME_DIR=$1
 . "$HOME_DIR"/islandora/install/configs/variables
 
 
+
+set -e
+if [ -f ~/bootstrap ]; then
+    exit
+fi
+
 if [ ! -d "$DOWNLOAD_DIR" ]; then
   mkdir -p "$DOWNLOAD_DIR"
 fi
 
 cd "$HOME_DIR"
 
-echo "Setting up ubuntu mirrors"
+
 if  ! grep -q "mirror://mirrors.ubuntu.com/mirrors.txt" /etc/apt/sources.list ; then
+  echo "Setting up ubuntu mirrors"
   sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse' /etc/apt/sources.list
   sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse' /etc/apt/sources.list
   sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse' /etc/apt/sources.list
@@ -45,3 +52,5 @@ apt-get -qq -y install wget curl | grep 'Setting up' | cat
 
 # More helpful packages
 apt-get -qq -y install htop tree fish | grep 'Setting up' | cat
+
+touch ~/bootstrap

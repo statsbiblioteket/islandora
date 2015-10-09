@@ -6,6 +6,12 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
+
+set -e
+if [ -f ~/post-install ]; then
+    exit
+fi
+
 echo "Chown and chmod tomcat directory"
 chown -R ${TOMCAT_USER} $TOMCAT_HOME
 chown -R ${TOMCAT_USER} $TOMCAT_LOGS
@@ -34,3 +40,4 @@ drush -q -r "$DRUPAL_HOME" cc all
 echo "Add DC as some default fields for folks."
 drush -q -r "$DRUPAL_HOME" scr "$HOME_DIR"/islandora/install/configs/add_default_fields.php
 
+touch ~/post-install

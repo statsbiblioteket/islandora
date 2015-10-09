@@ -7,6 +7,11 @@ HOME_DIR=$1
 . "$HOME_DIR"/islandora/install/configs/variables
 
 
+
+set -e
+if [ -f ~/fcrepo ]; then
+    exit
+fi
 if [ ! -f "$DOWNLOAD_DIR/fcrepo.war" ]; then
   echo "Downloading Fedora 4"
   wget -q -O "$DOWNLOAD_DIR/fcrepo.war" "https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-$FEDORA_VERSION/fcrepo-webapp-$FEDORA_VERSION.war"
@@ -29,3 +34,4 @@ sed -i 's#JAVA_OPTS="-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC"#
 echo "Restaring Tomcat with Fedora 4"
 eval $TOMCAT_CONTROLLER restart
 
+touch ~/fcrepo
