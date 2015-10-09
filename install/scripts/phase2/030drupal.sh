@@ -115,10 +115,10 @@ pear install PHP_CodeSniffer
 if [ ! -f "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" ]; then
   echo "Downloading coder"
   wget -q -O "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" http://ftp.drupal.org/files/projects/coder-8.x-2.1.tar.gz
+  cp  "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
+  cd /tmp
+  tar -xzf coder-8.x-2.1.tar.gz
+  mv  /tmp/coder /usr/share
+  chown -hR ${FRONTEND_USER}:${FRONTEND_USER} /usr/share/coder
+  ln -s /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards
 fi
-cp  "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
-cd /tmp
-tar -xzf coder-8.x-2.1.tar.gz
-mv  /tmp/coder /usr/share
-chown -hR ${FRONTEND_USER}:${FRONTEND_USER} /usr/share/coder
-ln -s /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards

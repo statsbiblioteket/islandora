@@ -14,7 +14,7 @@ fi
 cd "$HOME_DIR"
 
 echo "Setting up ubuntu mirrors"
-if [ ! $(grep "mirror://mirrors.ubuntu.com/mirrors.txt" /etc/apt/sources.list) ]; then
+if  ! grep -q "mirror://mirrors.ubuntu.com/mirrors.txt" /etc/apt/sources.list ; then
   sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse' /etc/apt/sources.list
   sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse' /etc/apt/sources.list
   sed -i -e '1i\deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse' /etc/apt/sources.list
