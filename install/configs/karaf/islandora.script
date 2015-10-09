@@ -1,0 +1,8 @@
+feature:repo-add file:/home/vagrant/islandora/camel/karaf/target/classes/features.xml
+
+feature:install islandora-sync-gateway
+feature:install islandora-basic-image-service
+feature:install islandora-collection-service
+feature:install islandora-camel-component
+
+logout

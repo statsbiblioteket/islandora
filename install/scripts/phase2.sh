@@ -17,9 +17,10 @@ echo "Starting phase 2 of install"
 /vagrant/scripts/phase2/110karaf-fcrepo-camel.sh $HOME_DIR
 /vagrant/scripts/phase2/120karaf-activemq.sh $HOME_DIR
 /vagrant/scripts/phase2/130karaf-config.sh $HOME_DIR
-/vagrant/scripts/phase2/140karaf-islandora-component.sh $HOME_DIR
-/vagrant/scripts/phase2/150sync.sh $HOME_DIR
-/vagrant/scripts/phase2/160services.sh $HOME_DIR
+/vagrant/scripts/phase2/140mvn-islandora-component.sh $HOME_DIR
+/vagrant/scripts/phase2/150mvn-islandora-sync.sh $HOME_DIR
+/vagrant/scripts/phase2/160mvn-islandora-services.sh $HOME_DIR
+/vagrant/scripts/phase2/165karaf-islandora.sh $HOME_DIR
 /vagrant/scripts/phase2/170post-install.sh $HOME_DIR
 
 echo "Phase 2 of install is now complete"

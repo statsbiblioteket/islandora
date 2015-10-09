@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Installing Islandora Component in Karaf"
+echo "Installing Islandora * from Maven to Karaf"
 
 HOME_DIR=$1
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
@@ -9,7 +9,8 @@ fi
 # Chown everything over to the vagrant user just in case
 chown -R ${FRONTEND_USER}:${FRONTEND_USER} "$HOME_DIR/.m2"
 
-cd "$HOME_DIR"/islandora/camel/component
+cd "$HOME_DIR"/islandora/camel/karaf
 
-sudo -u ${FRONTEND_USER} mvn -q install
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/component.script" > /dev/null
+sudo -u ${FRONTEND_USER} mvn -q clean install
+
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/islandora.script" > /dev/null
